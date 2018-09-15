@@ -1,0 +1,119 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://scenes/Main/Main.gd" type="Script" id=1]
+[ext_resource path="res://scenes/Main/Board.gd" type="Script" id=2]
+[ext_resource path="res://scenes/Board/Hex.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/Main/Background.gd" type="Script" id=4]
+[ext_resource path="res://scenes/Player/Player.tscn" type="PackedScene" id=5]
+
+[node name="Main" type="Node"]
+
+script = ExtResource( 1 )
+HEX_PADDING = 6
+VP_PADDING = 250
+N_LAYERS = 4
+LEFT_MARGIN = 0
+
+[node name="MessagePopup" type="PopupDialog" parent="." index="0"]
+
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+popup_exclusive = false
+_sections_unfolded = [ "Popup" ]
+
+[node name="MessageLabel" type="Label" parent="MessagePopup" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 40.0
+margin_bottom = 14.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "Message"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="MessageTimer" type="Timer" parent="MessagePopup" index="1"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = false
+
+[node name="Board" type="Node2D" parent="." index="1"]
+
+script = ExtResource( 2 )
+_sections_unfolded = [ "Transform" ]
+Hex = ExtResource( 3 )
+
+[node name="Background" type="Polygon2D" parent="." index="2"]
+
+position = Vector2( -554.028, 214.895 )
+polygon = PoolVector2Array( -23.2313, 0.262672, 376.95, 218.625, -20.2167, 838.344 )
+uv = PoolVector2Array(  )
+color = Color( 0, 0.882813, 1, 1 )
+vertex_colors = PoolColorArray(  )
+offset = Vector2( 0, 0 )
+antialiased = false
+texture = null
+texture_offset = Vector2( 0, 0 )
+texture_scale = Vector2( 1, 1 )
+texture_rotation_degrees = 0.0
+invert_enable = false
+invert_border = 100.0
+script = ExtResource( 4 )
+BG_COLOR = Color( 0.521569, 0.698039, 0.94902, 1 )
+
+[node name="Player1" parent="." index="3" instance=ExtResource( 5 )]
+
+[node name="Controls" parent="Player1" index="0"]
+
+anchor_left = 0.0
+anchor_right = 0.0
+margin_left = 0.0
+margin_top = -185.0
+margin_right = 200.0
+margin_bottom = 185.0
+
+[node name="Player2" parent="." index="4" instance=ExtResource( 5 )]
+
+[node name="Controls" parent="Player2" index="0"]
+
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -200.0
+margin_top = -180.0
+margin_right = 0.0
+margin_bottom = 180.0
+
+[connection signal="hex_clicked" from="Board" to="." method="_on_Board_hex_clicked"]
+
+[connection signal="player_alert" from="Player1" to="." method="display_message"]
+
+[connection signal="player_alert" from="Player2" to="." method="display_message"]
+
+
+[editable path="Player1"]
+[editable path="Player2"]

@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/Player/Player.gd" type="Script" id=1]
+[ext_resource path="res://scenes/UI/UI.tscn" type="PackedScene" id=2]
+
+[node name="Player" type="Node" index="0"]
+
+script = ExtResource( 1 )
+seed_color = null
+claim_color = null
+
+[node name="Controls" parent="." index="0" instance=ExtResource( 2 )]
+
+editor/display_folded = true
+
+[connection signal="finished_turn" from="." to="Controls" method="_on_Player_finished_turn"]
+
+[connection signal="new_turn" from="." to="Controls" method="_on_Player_new_turn"]
+
+[connection signal="set_action" from="Controls" to="." method="_on_Controls_set_action"]
+
+
